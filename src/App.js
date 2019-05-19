@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
+import { pseudoRandomBytes } from 'crypto';
 
 
 class App extends Component {
 
   state = {
     persons: [
-      { name: 'Claus', age: 48 },
-      { name: 'Lucas', age: 3 },
-      { name: 'Sarah', age: 1 },
-      { name: 'Náthila', age: 32 }
+      { id: 'a1', name: 'Claus', age: 48 },
+      { id: 'a2', name: 'Lucas', age: 3 },
+      { id: 'a3', name: 'Sarah', age: 1 },
+      { id: 'a4', name: 'Náthila', age: 32 }
     ],
     otherState: 'Some other values here',
     showPersons: false
@@ -28,10 +29,11 @@ class App extends Component {
   }
 
   deletePersonHandler = (personIndex) => {
-    const persons = this.state.persons;
+    // const persons = this.state.persons.slice();
+    //ES6 Operator
+    const persons = [...this.state.persons];
     persons.splice(personIndex, 1);
-    this.setState({persons: persons});
-
+    this.setState({ persons: persons });
   }
 
   togglePersonsHandler = () => {
@@ -54,9 +56,11 @@ class App extends Component {
         <div>
           {this.state.persons.map((person, index) => {
             return <Person
-              click={this.deletePersonHandler(index)}
+              click={() => this.deletePersonHandler(index)}
               name={person.name}
-              age={person.age} />
+              age={person.age}
+              key={person.id}
+            />
           })}
         </div>
       );
