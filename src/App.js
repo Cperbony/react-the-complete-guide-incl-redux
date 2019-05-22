@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
-import { pseudoRandomBytes } from 'crypto';
 
 
 class App extends Component {
@@ -35,7 +34,8 @@ class App extends Component {
     persons[personIndex] = person;
 
     this.setState({
-      persons: persons});
+      persons: persons
+    });
   }
 
   deletePersonHandler = (personIndex) => {
@@ -53,10 +53,12 @@ class App extends Component {
 
   render() {
     const style = {
-      backgroundColor: 'white',
+      backgroundColor: 'green',
+      color: 'white',
       font: 'inherit',
       border: '1px solid blue',
       padding: '8px',
+      cursor: 'pointer'
     };
 
     let persons = null;
@@ -75,12 +77,22 @@ class App extends Component {
           })}
         </div>
       );
+
+      style.backgroundColor = 'red';
+    }
+
+    const classes = [];
+    if (this.state.persons.length <= 2) {
+      classes.push('red');
+    }
+    if (this.state.persons.length <= 1) {
+      classes.push('bold');
     }
 
     return (
       <div className="App">
         <h1>Hi! I'm a React App</h1>
-        <p>Algo</p>
+        <p className={classes.join(' ')}>This about dinamically classes</p>
 
         <button
           style={style}
